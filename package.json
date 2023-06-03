@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/rahulp-97/cart97#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^16.1.3",
     "express": "^4.18.2",
     "nodemon": "^2.0.22"
