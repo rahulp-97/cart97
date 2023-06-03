@@ -1,0 +1,23 @@
+{
+  "name": "cart-97",
+  "version": "1.0.0",
+  "description": "eCommerce Application built by using MERN stack. Developed by Rahul Prajapati.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rahulp-97/cart97.git"
+  },
+  "author": "Rahul Prajapati",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rahulp-97/cart97/issues"
+  },
+  "homepage": "https://github.com/rahulp-97/cart97#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemon": "^2.0.22"
+  }
+}
