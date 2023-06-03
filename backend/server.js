@@ -1,9 +1,11 @@
 const express = require('express');
 require('dotenv').config({path: '../.env'});
-// dotenv.config();
+const connectDB = require('./config/db');
 const cors = require('cors');
 const products = require('./data/products');
 const port = process.env.PORT || 8000;
+
+connectDB();    //connect to MongoDB
 
 const app = express();
 app.use(cors());
