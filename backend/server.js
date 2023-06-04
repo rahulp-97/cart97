@@ -3,6 +3,7 @@ require('dotenv').config({path: '../.env'});
 const connectDB = require('./config/db');
 const cors = require('cors');
 const productRoutes = require('./routes/productRoutes');
+const errorMiddleware = require('./middleware/errorMiddleware');
 const port = process.env.PORT || 8000;
 
 connectDB();    //connect to MongoDB
@@ -15,6 +16,9 @@ app.get('/', (req, res)=>{
 });
 
 app.use('/api/products', productRoutes);
+
+app.use(errorMiddleware.notFound);
+app.use(errorMiddleware.errorHandler);
 
 app.listen(port, ()=>{
     console.log(`server is running on ${port}`);
