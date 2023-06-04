@@ -4,6 +4,8 @@ import axios from "axios";
 import { useGetProductDetailsQuery } from "../slices/productsApiSlice";
 import Rating from "../components/Rating";
 import { Row, Col, Image, ListGroup, Card, Button } from "react-bootstrap";
+import Loader from "../components/Loader";
+import Message from "../components/Message";
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
@@ -22,9 +24,9 @@ const ProductScreen = () => {
   return (
     <Fragment>
       {isLoading ? (
-        <h1>Loading...</h1>
+        <Loader />
       ) : error ? (
-        <div>{error?.data?.message || error.error}</div>
+        <Message variant='danger'>{error?.data?.message || error.error}</Message>
       ) : 
         <Fragment>
           <Link className="btn btn-light my-3" to="/">

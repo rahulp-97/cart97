@@ -3,6 +3,8 @@ import axios from "axios";
 import { Row, Col } from "react-bootstrap";
 import Product from "../components/Product";
 import { useGetProductsQuery } from "../slices/productsApiSlice";
+import Loader from "../components/Loader";
+import Message from "../components/Message";
 
 // "proxy": "http://localhost:8000",
 //-- data --
@@ -23,9 +25,9 @@ const HomeScreen = () => {
   return (
     <Fragment>
       {isLoading ? (
-        <h1>Loading...</h1>
+        <Loader />
       ) : error ? (
-        <div>{error?.data?.message || error.error}</div>
+        <Message variant='danger'>{error?.data?.message || error.error}</Message>
       ) : 
         <Fragment>
           <h1>Latest products</h1>
