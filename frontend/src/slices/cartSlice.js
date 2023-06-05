@@ -9,7 +9,7 @@ const initialState = localStorage.getItem("cart")
   : { cartItems: [] };
 
 const addDecimals = (num) => {
-    return num.toFixed(2);
+    return Math.round(num).toFixed(2);
 }
 
 const cartSlice = createSlice({
@@ -34,11 +34,9 @@ const cartSlice = createSlice({
             //shipping price (total items price is > rs.10000 then free else rs.100)
             state.shippingPrice = addDecimals(state.itemsPrice > 10000 ? 0 : 100);
             //tax price
-            state.taxPrice = addDecimals(Number(state.itemsPrice * 0.15));
+            state.taxPrice = addDecimals(Number(state.itemsPrice * 0.15).toFixed(2));
             //total price
-            state.totalPrice = addDecimals(
-                state.itemsPrice + state.shippingPrice + state.taxPrice
-            );
+            state.totalPrice = (Number(state.itemsPrice) + Number(state.shippingPrice) + Number(state.taxPrice)).toFixed(2);
 
             localStorage.setItem('cart', JSON.stringify(state));    //takes key:string and value pair.
             // key:'cart', value: state

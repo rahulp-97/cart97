@@ -1,7 +1,9 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 import { useGetProductDetailsQuery } from "../slices/productsApiSlice";
+import { addToCart } from "../slices/cartSlice";
 import Rating from "../components/Rating";
 import {Form, Row, Col, Image, ListGroup, Card, Button } from "react-bootstrap";
 import Loader from "../components/Loader";
@@ -10,8 +12,13 @@ import Message from "../components/Message";
 const ProductScreen = () => {
   const { id: productId } = useParams();
   const {data: product, isLoading, error} = useGetProductDetailsQuery(productId);
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [qty, setQty] = useState(1);
+  const addToCartHandler = () => {
+    dispatch(addToCart({...product, qty}));
+    navigate('/cart');
+  }
   // const [product, setProduct] = useState({});
 
   // useEffect(()=>{
@@ -92,6 +99,7 @@ const ProductScreen = () => {
                       className="btn-dark btn-block"
                       type="button"
                       disabled={product.countInStock === 0}
+                      onClick={addToCartHandler}
                     >
                       Add to Cart
                     </Button>
