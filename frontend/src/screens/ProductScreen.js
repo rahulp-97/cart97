@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { useGetProductDetailsQuery } from "../slices/productsApiSlice";
 import Rating from "../components/Rating";
-import { Row, Col, Image, ListGroup, Card, Button } from "react-bootstrap";
+import {Form, Row, Col, Image, ListGroup, Card, Button } from "react-bootstrap";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 
@@ -11,6 +11,7 @@ const ProductScreen = () => {
   const { id: productId } = useParams();
   const {data: product, isLoading, error} = useGetProductDetailsQuery(productId);
 
+  const [qty, setQty] = useState(1);
   // const [product, setProduct] = useState({});
 
   // useEffect(()=>{
@@ -74,6 +75,18 @@ const ProductScreen = () => {
                       </Col>
                     </Row>
                   </ListGroup.Item>
+                  {product.countInStock > 0 && (<ListGroup.Item>
+                    <Row>
+                      <Col>Quantity</Col>
+                      <Col>
+                        <Form.Control as='select' value={qty} onChange={(e)=> {Number(setQty(e.target.value))}}>
+                          {[...Array(product.countInStock).keys()].map((x) => {
+                            return <option key={x+1} value={x+1}>{x+1}</option>
+                          })}
+                        </Form.Control>
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>)}
                   <ListGroup.Item>
                     <Button
                       className="btn-dark btn-block"
