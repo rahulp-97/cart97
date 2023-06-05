@@ -86,10 +86,11 @@ const ProductScreen = () => {
                     <Row>
                       <Col>Quantity</Col>
                       <Col>
-                        <Form.Control as='select' value={qty} onChange={(e)=> {Number(setQty(e.target.value))}}>
-                          {[...Array(product.countInStock).keys()].map((x) => {
-                            return <option key={x+1} value={x+1}>{x+1}</option>
-                          })}
+                        <Form.Control as='select' value={qty} onChange={(e) => setQty(Number(e.target.value))}>
+                          {[...Array(product.countInStock).keys()].map((x) => (
+                            <option key={x+1} value={x+1}>{x+1}</option>
+                          )
+                          )}
                         </Form.Control>
                       </Col>
                     </Row>
