@@ -37,9 +37,9 @@ const ProductScreen = () => {
         <Message variant='danger'>{error?.data?.message || error.error}</Message>
       ) : 
         <Fragment>
-          <Link className="btn btn-light my-3" to="/">
+          <Button className="btn btn-dark my-3" onClick={()=> navigate(-1)}>
             Go Back
-          </Link>
+          </Button>
           <Row>
             <Col md={5}>
               <Image src={product.image} alt={product.name} fluid />
