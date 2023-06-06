@@ -3,6 +3,7 @@ require('dotenv').config({path: '../.env'});
 const connectDB = require('./config/db');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const productRoutes = require('./routes/productRoutes');
 const userRoutes = require('./routes/userRoutes');
 const errorMiddleware = require('./middleware/errorMiddleware');
@@ -13,6 +14,7 @@ connectDB();    //connect to MongoDB
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(cors());
 
 app.get('/', (req, res)=>{
