@@ -29,4 +29,5 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     })
 });
 
+// export like this - becaue usersApislice is a children slice to the apiSlice.
 export const {useLoginMutation, useRegisterMutation ,useLogoutMutation} = usersApiSlice;
