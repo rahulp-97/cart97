@@ -25,7 +25,7 @@ const cartSlice = createSlice({
                 //state are immutable that's why push is not used.
                 state.cartItems = [...state.cartItems, item]
             }
-            return updateCart(state);
+            return updateCart(state, item);
         },
         // remove from cart
         removeFromCart: (state, action) => {
@@ -42,8 +42,12 @@ const cartSlice = createSlice({
             state.paymentMethod = action.payload;
             return updateCart(state);
         },
+        clearCartItems: (state, action) => {
+            state.cartItems = [];
+            return updateCart(state);
+        }
     }
 });
 
-export const {addToCart, removeFromCart, saveShippingAddress, savePaymentMethod} = cartSlice.actions;
+export const {addToCart, removeFromCart, saveShippingAddress, savePaymentMethod, clearCartItems} = cartSlice.actions;
 export default cartSlice.reducer;

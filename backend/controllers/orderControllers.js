@@ -33,7 +33,7 @@ exports.addOrderItems = asyncHandler(async (req, res)=>{
 // access private
 exports.getMyOrders = asyncHandler(async (req, res)=> {
     const orders = await Order.find({user: req.user._id});
-    res.status(200).json(orders);
+    res.json(orders);
 });
 
 //get orders by id
@@ -44,7 +44,7 @@ exports.getOrdersById = asyncHandler(async (req, res)=> {
     // populate adds the field to the collections.
     // first input is for collection name and other inputs are fields you want to add.
     if(order){
-        res.status(200).json(order);
+        res.json(order);
     } else {
         res.status(404);
         throw new Error('Order not found');

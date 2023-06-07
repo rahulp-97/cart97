@@ -1,22 +1,16 @@
 const asyncHandler = require('../middleware/asyncHandler');
 const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
+const {generateToken} = require('../utils/generateToken');
 
 //auth user and get token
 //POST /api/users/login
 exports.authUser = asyncHandler(async (req, res)=> {
     const {email, password} = req.body;
     const user = await User.findOne({email});
-    if (user && (await user.checkPassword(password))){
-        //sign - Synchronously sign the given payload into a JSON Web Token string payload.
-        const token = jwt.sign({userId: user._id}, process.env.JWT_SECRET, {expiresIn: '365d'});
-
-        //set JWT as HTTP-Only cookie
-        res.cookie('jwt', token, {
-            httpOnly: true,
-            maxAge: 365*24*60*60*1000 //milisecond - 365 days.
-        });
-        res.status(200).json({
+    if (user && (await user.matchPassword(password))){
+        generateToken(res, user._id);
+        res.json({
             _id: user._id,
             name: user.name,
             email: user.email,
@@ -40,12 +34,8 @@ exports.registerUser = asyncHandler(async (req, res)=> {
     else{
         const user = await User.create({name, email, password});
         if(user){
-            const token = jwt.sign({userId: user._id}, process.env.JWT_SECRET, {expiresIn: '365d'});
-            res.cookie('jwt', token, {
-                httpOnly: true,
-                maxAge: 365*24*60*60*1000 //milisecond - 365 days.
-            });
-            res.status(200).json({
+            generateToken(res, user._id);
+            res.status(201).json({
                 _id: user._id,
                 name: user.name,
                 email: user.email,
@@ -71,7 +61,7 @@ exports.logoutUser = asyncHandler(async (req, res)=> {
 exports.getUserProfile = asyncHandler(async (req, res)=> {
     const user = await User.findById(req.user._id);
     if(user){
-        res.status(200).json({
+        res.json({
             _id: user._id,
             name: user.name,
             email: user.email,

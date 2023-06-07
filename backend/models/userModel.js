@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
 }, {timestamps: true});
 
 // entered password comparison with the stored password in database.
-userSchema.methods.checkPassword = async function (enteredPassword){
+userSchema.methods.matchPassword = async function (enteredPassword){
     return await bcrypt.compare(enteredPassword, this.password);
 };
 

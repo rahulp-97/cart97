@@ -6,7 +6,7 @@ exports.protect = asyncHandler(async (req,res,next)=>{
     let token;
     // read the jwt from cookie
     token = req.cookies.jwt;
-    if(token){
+    if (token) {
         try{
             //synchronously verify given token using a secret or a public key to get a decoded token token 
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -16,6 +16,7 @@ exports.protect = asyncHandler(async (req,res,next)=>{
             req.user = await User.findById(decoded.userId).select('-password');
             next();
         } catch(error){
+            console.log(error);
             res.status(401);
             throw new Error('not authorized, token failed');
         }

@@ -7,18 +7,18 @@ import CheckoutSteps from '../components/CheckoutSteps';
 import { savePaymentMethod } from '../slices/cartSlice';
 
 const PaymentScreen = () => {
-    const [paymentMethod, setPaymentMethod] = useState('PayPal');
-    const dispatch = useDispatch();
     const navigate = useNavigate();
-
     const cart = useSelector((state) => state.cart);
-    const {shippingAddress} = cart;
+    const { shippingAddress } = cart;
 
     useEffect(()=> {
-        if(!shippingAddress){
+        if(!shippingAddress.address){
             navigate('/shipping');
         }
     }, [shippingAddress, navigate]);
+
+    const [paymentMethod, setPaymentMethod] = useState('PayPal');
+    const dispatch = useDispatch();
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -53,4 +53,4 @@ const PaymentScreen = () => {
   )
 }
 
-export default PaymentScreen
+export default PaymentScreen;

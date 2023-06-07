@@ -7,7 +7,7 @@ const baseQuery = fetchBaseQuery({baseUrl: BASE_URL});
 //Endpoints are just a set of operations that you want to perform against your server.
 //You define them as an object using the builder syntax. There are two basic endpoint types: query and mutation.
 export const apiSlice = createApi({
-    baseQuery: baseQuery,
+    baseQuery,
     tagTypes: ['Product', 'Order', 'User' ],
     endpoints: (builder) => ({})
 })
