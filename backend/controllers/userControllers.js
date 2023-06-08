@@ -31,10 +31,11 @@ exports.registerUser = asyncHandler(async (req, res)=> {
         res.status(400);
         throw new Error('User registered already. Please login');
     }
-    else{
+    
         const user = await User.create({name, email, password});
         if(user){
             generateToken(res, user._id);
+            
             res.status(201).json({
                 _id: user._id,
                 name: user.name,
@@ -46,7 +47,7 @@ exports.registerUser = asyncHandler(async (req, res)=> {
             throw new Error('invalid user data');
         }
     }
-});
+);
 
 //Logout user / clear cookie
 //POST  api/users/logout

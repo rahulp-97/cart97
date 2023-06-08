@@ -1,27 +1,31 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const orderControllers = require('../controllers/orderControllers');
-const {protect, admin} = require('../middleware/authMiddleware');
-
-const {addOrderItems, getOrders, getMyOrders, getOrdersById, updateOrderToPaid, updateOrderToDelivered} = orderControllers;
-
+const {
+  addOrderItems,
+  getOrders,
+  getMyOrders,
+  getOrdersById,
+  updateOrderToPaid,
+  updateOrderToDelivered,
+} = require("../controllers/orderControllers");
+const { protect, admin } = require("../middleware/authMiddleware");
 
 // post order
-router.post('/', protect, orderControllers.addOrderItems);
+router.post("/", protect, addOrderItems);
 
 //get all orders
-router.get('/', protect, admin, orderControllers.getOrders);
+router.get("/", protect, admin, getOrders);
 
 //my orders
-router.get('/mine', protect, orderControllers.getMyOrders);
+router.get("/mine", protect, getMyOrders);
 
 //get order by id
-router.get('/:id', protect, admin, orderControllers.getOrdersById);
+router.get("/:id", protect, getOrdersById);
 
 //update order to paid
-router.put('/:id/pay', protect, orderControllers.updateOrderToPaid);
+router.put("/:id/pay", protect, updateOrderToPaid);
 
 //update order to delivered
-router.put('/:id/deliver', protect, orderControllers.updateOrderToDelivered);
+router.put("/:id/deliver", protect, updateOrderToDelivered);
 
 module.exports = router;
