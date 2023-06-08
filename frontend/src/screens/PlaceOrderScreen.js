@@ -75,7 +75,7 @@ const PlaceOrderScreen = () => {
                           <Image src={item.image} alt={item.name} fluid rounded />
                         </Col>
                         <Col>
-                          <Link to={`/product/${item._id}`}>{item.name}</Link>
+                          <Link style={{textDecoration:'none', color:'black'}} to={`/product/${item._id}`}>{item.name}</Link>
                         </Col>
                         <Col md={4}>
                           {item.qty} x ₹{item.price} = ₹{item.qty*item.price}

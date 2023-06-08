@@ -7,7 +7,7 @@ import {
 } from "../slices/ordersApiSlice";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import { useSelector, useDispatch } from "react-redux";
-import {Row, Col, ListGroup, Image, Form, Button, Card} from "react-bootstrap";
+import {Row, Col, ListGroup, Image, Form, Button, Card, ListGroupItem} from "react-bootstrap";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { toast } from "react-toastify";
@@ -61,7 +61,7 @@ const OrderScreen = () => {
                   Delivered on {order.deliveredAt}
                 </Message>
               ) : (
-                <Message variant="danger">Order not delivered</Message>
+                <Message variant="danger"><strong>Order not delivered</strong></Message>
               )}
             </ListGroup.Item>
             <ListGroup.Item>
@@ -71,7 +71,7 @@ const OrderScreen = () => {
                 {order.paymentMethod}
               </p>
               {order.isPaid ? (
-                <Message variant="success">Paid on {order.paidAt}</Message>
+                <Message variant="success"><strong>Paid on {order.paidAt}</strong></Message>
               ) : (
                 <Message variant="danger">Not paid yet.</Message>
               )}
@@ -85,7 +85,7 @@ const OrderScreen = () => {
                       <Image src={item.image} alt={item.name} fluid rounded />
                     </Col>
                     <Col>
-                      <Link to={`/product/${item.product}`}>{item.name}</Link>
+                      <Link style={{textDecoration:'none', color:'black'}} to={`/product/${item.product}`}><strong>{item.name}</strong></Link>
                     </Col>
                     <Col md={4}>
                       ₹{item.price} x {item.qty} = ₹{item.price * item.qty}
@@ -135,9 +135,15 @@ const OrderScreen = () => {
                   )}
                 </ListGroup.Item>
               )}
+
               {/* MARK AS DELIVERED PLACEHOLDER */}
             </ListGroup>
           </Card>
+          <ListGroup>
+            <ListGroupItem>
+            {order.isPaid && <Message variant='success'><strong>Thanks for shopping,</strong> <Link to='/' style={{textDecoration:'none'}}>explore more</Link></Message>}
+            </ListGroupItem>
+          </ListGroup>
         </Col>
       </Row>
     </Fragment>
