@@ -8,6 +8,8 @@ const productRoutes = require('./routes/productRoutes');
 const userRoutes = require('./routes/userRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const errorMiddleware = require('./middleware/errorMiddleware');
+
+//port
 const port = process.env.PORT || 8000;
 
 connectDB();    //connect to MongoDB
@@ -22,11 +24,15 @@ app.use(cookieParser());
 app.get('/', (req, res)=>{
     res.send('API is running');
 });
-
+//routes
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/orders', orderRoutes);
-
+//paypal
+app.get('/api/config/paypal', (req, res)=> (
+    res.send({ clientId: process.env.PAYPAL_CLIENT_ID})
+))
+//error middleware
 app.use(errorMiddleware.notFound);
 app.use(errorMiddleware.errorHandler);
 
