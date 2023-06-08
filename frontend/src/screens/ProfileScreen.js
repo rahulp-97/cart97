@@ -6,7 +6,9 @@ import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { toast } from "react-toastify";
 import {useProfileMutation} from '../slices/usersApiSlice';
+import {useGetMyOrdersQuery} from '../slices/ordersApiSlice';
 import {setCredentials} from '../slices/authSlice';
+import { FaTimes } from 'react-icons/fa';
 
 const ProfileScreen = () => {
     const [name, setName] = useState('');
@@ -16,6 +18,7 @@ const ProfileScreen = () => {
 
     const {userInfo} = useSelector((state) => state.auth);
     const [updateProfile, {isLoading: loadingUpdateProfile}] = useProfileMutation();
+    const {data: orders, isLoading, error} = useGetMyOrdersQuery();
     useEffect(()=> {
         if(userInfo){
             setName(userInfo.name);
@@ -43,7 +46,7 @@ const ProfileScreen = () => {
                 toast.error(err?.data?.message || err.error);
             }
         }
-    }
+    } 
 
     return (
         <Row>
@@ -99,7 +102,7 @@ const ProfileScreen = () => {
           </Col>
           <Col md={9}>
             <h2>My Orders</h2>
-            {/* {isLoading ? (
+            {isLoading ? (
               <Loader />
             ) : error ? (
               <Message variant='danger'>
@@ -148,7 +151,7 @@ const ProfileScreen = () => {
                   ))}
                 </tbody>
               </Table>
-            )} */}
+            )}
           </Col>
         </Row>
       );
