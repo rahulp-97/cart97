@@ -12,8 +12,8 @@ import { apiSlice } from "./apiSlice";
 export const productsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getProducts: builder.query({
-      query: ({keyword}) => ({
-        url: PRODUCTS_URL,
+      query: ({keyword, sortByPrice}) => ({
+        url: `${PRODUCTS_URL}/?sort=${sortByPrice}`,
         params: {keyword},
         credentials: 'include',
       }),
@@ -25,9 +25,9 @@ export const productsApiSlice = apiSlice.injectEndpoints({
             credentials: 'include',
         }),
         keepUnusedDataFor: 5
-    })
+    }),
   }),
 });
 
 // convention is to use at prefix and Query at the end of query name.
-export const {useGetProductsQuery, useGetProductDetailsQuery} = productsApiSlice;
+export const {useGetProductsQuery, useGetProductDetailsQuery, useGetSortedProductsQuery} = productsApiSlice;

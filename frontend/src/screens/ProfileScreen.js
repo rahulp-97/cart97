@@ -102,6 +102,7 @@ const ProfileScreen = () => {
           </Col>
           <Col md={9}>
             <h2>My Orders</h2>
+            {orders?.length === 0 && <Message>No orders found</Message>}
             {isLoading ? (
               <Loader />
             ) : error ? (

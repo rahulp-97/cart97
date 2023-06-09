@@ -6,18 +6,16 @@ exports.protect = asyncHandler(async (req,res,next)=>{
     let token;
     // read the jwt from cookie
     token = req.cookies.jwt;
-    console.log('token',token);
     if (token) {
         try{
             //synchronously verify given token using a secret or a public key to get a decoded token token 
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
-            console.log(decoded);
+           
             //select- Specifies which document fields to include or exclude
             // excluding password field
             req.user = await User.findById(decoded.userId).select('-password');
             next();
         } catch(error){
-            console.log(error);
             res.status(401);
             throw new Error('not authorized, token failed');
         }

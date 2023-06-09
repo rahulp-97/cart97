@@ -1,9 +1,9 @@
 import React, { Fragment, useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Form } from "react-bootstrap";
 import Product from "../components/Product";
-import { useGetProductsQuery } from "../slices/productsApiSlice";
+import { useGetProductsQuery, useGetSortedProductsQuery } from "../slices/productsApiSlice";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 
@@ -13,7 +13,8 @@ import Message from "../components/Message";
 
 const HomeScreen = () => {
   const {keyword} = useParams();
-  const { data: products, isLoading, error } = useGetProductsQuery({keyword});
+  const [sortByPrice, setSortByPrice] = useState('');
+  const { data: products, isLoading, error } = useGetProductsQuery({keyword, sortByPrice});
   // const [products, setProducts] = useState([]);
 
   // useEffect(()=>{
@@ -24,6 +25,9 @@ const HomeScreen = () => {
   //   }
   //   fetchProducts();
   // }, [])
+  const sortHandler = async (e) => {
+    setSortByPrice(e.target.value);
+  }
   return (
     <Fragment>
       {keyword && <Link to='/' className="btn btn-dark mb-4">Go Back</Link>}
@@ -35,6 +39,15 @@ const HomeScreen = () => {
         <Fragment>
           {keyword ? (<h2>Search results</h2>) : (<h2>Latest products</h2>)}
           {keyword && products.length===0 && <h5 className="text-center mt-5">No products</h5>}
+          <Row>
+          <Col md={2}>
+                    <Form.Control as="select" onChange={sortHandler}>
+                      <option value=''>Sort</option>
+                      <option  value='asc'>Price- Low to High</option>
+                      <option  value='dsc'>Price- High to Low</option>
+                    </Form.Control>
+                  </Col>
+          </Row>
           <Row>
             {products.map((product) => {
               return (

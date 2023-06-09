@@ -1,20 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const userControllers = require('../controllers/userControllers');
-const authMiddleware = require('../middleware/authMiddleware');
+const {getUsers, registerUser, authUser,  logoutUser, getUserProfile, updateUserProfile, deleteUser, getUserById, updateUser} = require('../controllers/userControllers');
+const {protect, admin} = require('../middleware/authMiddleware');
 
-const {protect, admin} = authMiddleware;
+router.get('/', protect, admin, getUsers);
+router.post('/', registerUser);
+router.post('/auth', authUser);
+router.post('/logout', logoutUser);
 
-router.get('/', protect, admin, userControllers.getUsers);
-router.post('/', userControllers.registerUser);
-router.post('/auth', userControllers.authUser);
-router.post('/logout', userControllers.logoutUser);
+router.get('/profile', protect, getUserProfile);
+router.put('/profile', protect, updateUserProfile);
 
-router.get('/profile', protect, userControllers.getUserProfile);
-router.put('/profile', protect, userControllers.updateUserProfile);
-
-router.delete('/:id', protect, admin, userControllers.deleteUser);
-router.get('/:id', protect, admin, userControllers.getUserById);
-router.put('/:id', protect, admin, userControllers.updateUser);
+router.delete('/:id', protect, admin, deleteUser);
+router.get('/:id', protect, admin, getUserById);
+router.put('/:id', protect, admin, updateUser);
 
 module.exports = router;
