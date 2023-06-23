@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {getProducts, getProductById, createProduct} = require('../controllers/productControllers');
+const {getProducts, getProductById, createProduct, updateProduct} = require('../controllers/productControllers');
 const {protect, admin} = require('../middleware/authMiddleware');
 
 // get product
@@ -12,7 +12,7 @@ router.get('/:id', getProductById);
 // POST create a product
 router.post('/', protect, admin, createProduct);
 
-// get sorted products by price
-// router.get('/sort', getSortedProducts);
+// PUT update a product
+router.put('/:id', protect, admin, updateProduct);
 
 module.exports = router;

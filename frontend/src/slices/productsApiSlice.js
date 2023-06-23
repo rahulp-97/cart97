@@ -17,6 +17,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
         params: {keyword},
         credentials: 'include',
       }),
+      providesTags: ['Products'],
       keepUnusedDataFor: 5
     }),
     getProductDetails: builder.query({
@@ -33,9 +34,18 @@ export const productsApiSlice = apiSlice.injectEndpoints({
         credentials: 'include',
       }),
       invalidatesTags: ['Product']
+    }),
+    updateProduct: builder.mutation({
+      query: (data) => ({
+        url: `${PRODUCTS_URL}/${data.productId}`,
+        method: 'PUT',
+        body: data,
+        credentials: 'include',
+      }),
+      invalidatesTags: ['Products']
     })
   }),
 });
 
 // convention is to use at prefix and Query at the end of query name.
-export const {useGetProductsQuery, useGetProductDetailsQuery, useCreateProductMutation} = productsApiSlice;
+export const {useGetProductsQuery, useGetProductDetailsQuery, useCreateProductMutation, useUpdateProductMutation} = productsApiSlice;

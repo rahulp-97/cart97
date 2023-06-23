@@ -5,13 +5,12 @@ import {FaTimes, FaEdit ,FaTrash} from 'react-icons/fa';
 import Message from '../../components/Message';
 import Loader from '../../components/Loader';
 import {toast} from 'react-toastify';
-import { useGetProductsQuery, useCreateProductMutation } from '../../slices/productsApiSlice';
+import { useGetProductsQuery, useCreateProductMutation, useUpdateProductMutation } from '../../slices/productsApiSlice';
 
 const ProductListScreen = () => {
     const {data:products, isLoading, error, refetch} = useGetProductsQuery({});
     const [createProduct, {isLoading: loadingCreate}] = useCreateProductMutation();
 
-    console.log(products);
     const createProductHandler = async () => {
         if(window.confirm('Are you sure, you want to create a Product?')){
             try {
@@ -60,7 +59,7 @@ const ProductListScreen = () => {
                             <td>{product.category}</td>
                             <td>{product.brand}</td>
                             <td>
-                                <LinkContainer to={`/admin/product/${product._id}`}>
+                                <LinkContainer to={`/admin/product/${product._id}/edit`}>
                                     <Button variant='light' className='btn-sm mx-2'>
                                         <FaEdit />
                                     </Button>
