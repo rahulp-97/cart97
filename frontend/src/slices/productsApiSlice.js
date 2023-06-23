@@ -26,8 +26,16 @@ export const productsApiSlice = apiSlice.injectEndpoints({
         }),
         keepUnusedDataFor: 5
     }),
+    createProduct: builder.mutation({
+      query: () => ({
+        url: PRODUCTS_URL,
+        method: 'POST',
+        credentials: 'include',
+      }),
+      invalidatesTags: ['Product']
+    })
   }),
 });
 
 // convention is to use at prefix and Query at the end of query name.
-export const {useGetProductsQuery, useGetProductDetailsQuery, useGetSortedProductsQuery} = productsApiSlice;
+export const {useGetProductsQuery, useGetProductDetailsQuery, useCreateProductMutation} = productsApiSlice;
