@@ -96,9 +96,6 @@ nodemon seeder.js d
 ```
 Sample User Logins
 
-admin@gmail.com (Admin)
-123456
-
 tony@gmail.com (Customer)
 123456
 
